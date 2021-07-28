@@ -1,0 +1,18 @@
+{
+    "name": "splatbot",
+    "version": "1.0.0",
+    "description": "",
+    "main": "discord.js",
+    "dependencies": {
+        "discord.js": "^12.5.3",
+        "dotenv": "^10.0.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node ./src/discord.js",
+        "dev": "nodemon ./src/discord.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+}
