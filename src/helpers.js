@@ -20,13 +20,14 @@ const randomizeMaps = (maps, bestOf) => {
 
     const mapTypes = Object.keys(maps);
 
-    const selectedTypes = shuffle([...Array(bestOf).keys()]);
+    const selectedTypes = shuffle([...Array(bestOf + 1).keys()]);
 
+    // unreadable solution, someone please clean this up
     selected = selectedTypes.map((index) => {
-        // unreadable solution, someone please clean this up
-
-        return { map: maps[mapTypes[index]][randomNumBetween(0, maps[mapTypes[index]].length)], index };
+        map: maps[mapTypes[index]][randomNumBetween(0, maps[mapTypes[index]].length)], index;
     });
+
+    selected.pop();
 
     return selected;
 };
