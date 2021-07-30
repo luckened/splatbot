@@ -15,36 +15,50 @@ const randomNumBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
+const hasRepetition = (selected) => {
+    if (selected.length === 0) return false;
+
+    const selectedMaps = selected.map((item) => item.map);
+
+    const hasDuplicates = !selectedMaps.some((item, index) => selectedMaps.indexOf(item) !== index);
+
+    return hasDuplicates;
+};
+
 const randomizeBO3 = (maps) => {
-    let selected = {};
+    let selected = [];
     const bestOf = 3;
     const mapTypes = Object.keys(maps);
     const selectedTypes = shuffle([...Array(bestOf + 1).keys()]);
 
-    selected = selectedTypes.map((index) => {
-        const current = maps[mapTypes[index]];
+    while (!hasRepetition(selected)) {
+        selected = selectedTypes.map((index) => {
+            const current = maps[mapTypes[index]];
 
-        return { map: current[randomNumBetween(0, current.length)], index };
-    });
+            return { map: current[randomNumBetween(0, current.length)], index };
+        });
 
-    selected.pop();
+        selected.pop();
+    }
 
     return selected;
 };
 
 const randomizeBO5 = (maps) => {
-    let selected = {};
+    let selected = [];
     const bestOf = 5;
     const mapTypes = Object.keys(maps);
     let selectedTypes = shuffle([...Array(bestOf - 1).keys()]);
 
     selectedTypes.push(randomNumBetween(0, bestOf - 1));
 
-    selected = selectedTypes.map((index) => {
-        const current = maps[mapTypes[index]];
+    while (!hasRepetition(selected)) {
+        selected = selectedTypes.map((index) => {
+            const current = maps[mapTypes[index]];
 
-        return { map: current[randomNumBetween(0, current.length)], index };
-    });
+            return { map: current[randomNumBetween(0, current.length)], index };
+        });
+    }
 
     return selected;
 };
