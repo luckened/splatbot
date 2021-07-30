@@ -2,7 +2,8 @@ require("dotenv/config");
 
 const { Client } = require("discord.js");
 const { maps, emojis } = require("./maps");
-const { capital, randomizeMaps } = require("./helpers");
+const { capital, randomizeBO3, randomizeBO5 } = require("./helpers");
+const splatbotChannel = "864314233511870478";
 
 const client = new Client();
 
@@ -14,8 +15,10 @@ const filter = (reaction, user) => {
     return valid;
 };
 
-client.on("ready", () => {
-    console.log(client.user.tag);
+client.on("ready", (a) => {
+    client.channels.fetch(splatbotChannel).then((channel) => {
+        channel.send("Ready");
+    });
 });
 
 client.on("message", (message) => {
@@ -54,7 +57,7 @@ client.on("message", (message) => {
 
     if (content === "/3") {
         message.reply("Randomizando para melhor de 3...");
-        const arranged = randomizeMaps(maps, 3);
+        const arranged = randomizeBO3(maps);
         message.channel.send("Mapas sorteados:");
         message.channel.send("\u200B");
         message.channel.send(arranged.map((item) => `${mapTypes[item.index]} -> ${item.map}`));
@@ -62,7 +65,7 @@ client.on("message", (message) => {
 
     if (content === "/5") {
         message.reply("Randomizando para melhor de 5..");
-        const arranged = randomizeMaps(maps, 5);
+        const arranged = randomizeBO5(maps);
         message.channel.send("Mapas sorteados:");
         message.channel.send("\u200B");
         message.channel.send(arranged.map((item) => `${mapTypes[item.index]} -> ${item.map}`));

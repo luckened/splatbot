@@ -15,16 +15,16 @@ const randomNumBetween = (min, max) => {
     return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const randomizeMaps = (maps, bestOf) => {
+const randomizeBO3 = (maps) => {
     let selected = {};
-
+    const bestOf = 3;
     const mapTypes = Object.keys(maps);
-
     const selectedTypes = shuffle([...Array(bestOf + 1).keys()]);
 
-    // unreadable solution, someone please clean this up
     selected = selectedTypes.map((index) => {
-        map: maps[mapTypes[index]][randomNumBetween(0, maps[mapTypes[index]].length)], index;
+        const current = maps[mapTypes[index]];
+
+        return { map: current[randomNumBetween(0, current.length)], index };
     });
 
     selected.pop();
@@ -32,4 +32,21 @@ const randomizeMaps = (maps, bestOf) => {
     return selected;
 };
 
-module.exports = { capital, randomizeMaps };
+const randomizeBO5 = (maps) => {
+    let selected = {};
+    const bestOf = 5;
+    const mapTypes = Object.keys(maps);
+    let selectedTypes = shuffle([...Array(bestOf - 1).keys()]);
+
+    selectedTypes.push(randomNumBetween(0, bestOf - 1));
+
+    selected = selectedTypes.map((index) => {
+        const current = maps[mapTypes[index]];
+
+        return { map: current[randomNumBetween(0, current.length)], index };
+    });
+
+    return selected;
+};
+
+module.exports = { capital, randomizeBO3, randomizeBO5 };
